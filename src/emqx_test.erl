@@ -6,7 +6,7 @@
           unload/0
         ]).
 
--export([ on_client_connect/3]).
+-export([ on_client_connect/2]).
 
 
 load() ->
@@ -16,7 +16,7 @@ unload() ->
     emqx:unhook('client.connect',      {?MODULE, on_client_connect}).
 
 
-on_client_connect(ConnInfo = #{clientid := ClientId}, Props, _Env) ->
+on_client_connect(ConnInfo = #{clientid := ClientId}, Props) ->
     io:format("Client(~s) connect, ConnInfo: ~p, Props: ~p~n",
               [ClientId, ConnInfo, Props]),
     {ok, Props}.
