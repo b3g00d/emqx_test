@@ -1,0 +1,46 @@
+%%-*- mode: erlang -*-
+
+{mapping, "emqx_test.hook.client.connected.$name", "emqx_test.hooks", [
+  {datatype, string}
+]}.
+
+{mapping, "emqx_test.hook.client.disconnected.$name", "emqx_test.hooks", [
+  {datatype, string}
+]}.
+
+{mapping, "emqx_test.hook.client.subscribe.$name", "emqx_test.hooks", [
+  {datatype, string}
+]}.
+
+{mapping, "emqx_test.hook.client.unsubscribe.$name", "emqx_test.hooks", [
+  {datatype, string}
+]}.
+
+{mapping, "emqx_test.hook.session.subscribed.$name", "emqx_test.hooks", [
+  {datatype, string}
+]}.
+
+{mapping, "emqx_test.hook.session.unsubscribed.$name", "emqx_test.hooks", [
+  {datatype, string}
+]}.
+
+{mapping, "emqx_test.hook.message.publish.$name", "emqx_test.hooks", [
+  {datatype, string}
+]}.
+
+{mapping, "emqx_test.hook.message.acked.$name", "emqx_test.hooks", [
+  {datatype, string}
+]}.
+
+{mapping, "emqx_test.hook.message.delivered.$name", "emqx_test.hooks", [
+  {datatype, string}
+]}.
+
+
+{translation, "emqx_test.hooks", fun(Conf) ->
+  Hooks = cuttlefish_variable:filter_by_prefix("emqx_test.hook", Conf),
+  lists:map(
+    fun({[_, _, Name1, Name2, _], Val}) ->
+	  {lists:concat([Name1, ".", Name2]), Val}
+	end, Hooks)
+end}.
