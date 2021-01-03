@@ -7,8 +7,6 @@
 
 -behaviour(application).
 
--include("emqx_test.hrl").
-
 -emqx_plugin(?MODULE).
 
 -export([ start/2
@@ -17,10 +15,9 @@
 
 start(_StartType, _StartArgs) ->
     {ok, Sup} = emqx_test_sup:start_link(),
-    ?APP:load(),
-    ?APP:register_metrics(),
+    emqx_test:load(),
     {ok, Sup}.
 
 stop(_State) ->
-    ?APP:unload(),
+    emqx_test:unload(),
     ok.
