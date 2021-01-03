@@ -2,7 +2,7 @@
  [{description, "An EMQ X plugin"},
   {vsn, "git"},
   {modules, []},
-  {registered, []},
+  {registered, [emqx_test_sup]},
   {mod, {emqx_test_app, []}},
   {applications,
    [kernel,
