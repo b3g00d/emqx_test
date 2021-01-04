@@ -1,5 +1,5 @@
 %%-*- mode: erlang -*-
 
-{mapping, "auth.jwt.secret", "emqx_auth_jwt.secret", [
+{mapping, "auth.jwt.secret", "emqx_test.secret", [
   {datatype, string}
 ]}.
