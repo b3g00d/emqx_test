@@ -10,10 +10,10 @@
 
 
 load() ->
-    emqx:hook('client.connect',      {?MODULE, on_client_connect, []}).
+    emqx:hook('client.connect',      {emqx_test, on_client_connect, []}).
 
 unload() ->
-    emqx:unhook('client.connect',      {?MODULE, on_client_connect}).
+    emqx:unhook('client.connect',      {emqx_test, on_client_connect}).
 
 
 on_client_connect(ConnInfo = #{clientid := ClientId}, Props) ->
