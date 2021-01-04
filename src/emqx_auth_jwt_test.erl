@@ -61,7 +61,7 @@ check(ClientInfo, AuthResult, Env = #{from := From, checklists := Checklists}) -
                     end
             catch
                 _Error:Reason ->
-                    ?LOG(error, "Check token error: ~p", [Reason]),
+                    ?LOG(error, "Check token error: ~p", [Reason])
             end
     end.
 
