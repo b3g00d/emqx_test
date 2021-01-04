@@ -14,7 +14,7 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(emqx_auth_jwt).
+-module(emqx_auth_jwt_test).
 
 -include_lib("emqx/include/emqx.hrl").
 -include_lib("emqx/include/logger.hrl").

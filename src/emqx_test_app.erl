@@ -15,7 +15,7 @@
 
 -define(APP, emqx_test).
 
--define(JWT_ACTION, {emqx_auth_jwt, check, [auth_env()]}).
+-define(JWT_ACTION, {emqx_auth_jwt_test, check, [auth_env()]}).
 
 start(_StartType, _StartArgs) ->
     {ok, Sup} = emqx_test_sup:start_link(),
