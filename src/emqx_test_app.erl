@@ -19,11 +19,13 @@
 
 start(_StartType, _StartArgs) ->
     {ok, Sup} = emqx_test_sup:start_link(),
+    emqx_test:load(),
     emqx:hook('client.authenticate', ?JWT_ACTION),
     {ok, Sup}.
 
 stop(_State) ->
     emqx_test:unload(),
+    emqx:unhook('client.authenticate', ?JWT_ACTION),
     ok.
 
 auth_env() ->
