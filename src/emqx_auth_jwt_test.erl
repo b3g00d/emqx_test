@@ -49,7 +49,6 @@ register_metrics() ->
 check(ClientInfo, AuthResult, Env = #{from := From, checklists := Checklists}) ->
     case maps:find(From, ClientInfo) of
         error ->
-            ok = emqx_metrics:inc(?AUTH_METRICS(ignore)),
             {ok, AuthResult#{auth_result => token_undefined, anonymous => false}};
         {ok, Token} ->
             try jwerl:header(Token) of
@@ -58,13 +57,11 @@ check(ClientInfo, AuthResult, Env = #{from := From, checklists := Checklists}) -
                         {ok, Claims} ->
                             {stop, maps:merge(AuthResult, verify_claims(Checklists, Claims, ClientInfo))};
                         {error, Reason} ->
-                            ok = emqx_metrics:inc(?AUTH_METRICS(failure)),
                             {stop, AuthResult#{auth_result => Reason, anonymous => false}}
                     end
             catch
                 _Error:Reason ->
                     ?LOG(error, "Check token error: ~p", [Reason]),
-                    emqx_metrics:inc(?AUTH_METRICS(ignore))
             end
     end.
 
@@ -123,10 +120,8 @@ decode_algo(Alg) -> throw({error, {unsupported_algorithm, Alg}}).
 verify_claims(Checklists, Claims, ClientInfo) ->
     case do_verify_claims(feedvar(Checklists, ClientInfo), Claims) of
         {error, Reason} ->
-            ok = emqx_metrics:inc(?AUTH_METRICS(failure)),
             #{auth_result => Reason, anonymous => false};
         ok ->
-            ok = emqx_metrics:inc(?AUTH_METRICS(success)),
             #{auth_result => success, anonymous => false, jwt_claims => Claims}
     end.
 
